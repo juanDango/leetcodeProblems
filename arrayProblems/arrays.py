@@ -84,16 +84,10 @@ def is_anagram(s, t):
     t_count = {}
     s_count = {}
     for l in t:
-        if l in t_count:
-            t_count[l] = t_count[l] + 1
-        else:
-            t_count[l] = 1
+        t_count[l] = t_count.get(l, 0) + 1
         
     for l in s:
-        if l in s_count:
-            s_count[l] = s_count[l] + 1
-        else:
-            s_count[l] = 1
+        s_count[l] = s_count.get(l, 0) + 1
         
     for k, v in t_count.items():
         if s_count.get(k, 0) != v:
