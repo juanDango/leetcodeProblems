@@ -3,6 +3,7 @@ def print_menu_arrays():
     print("217. Contains Duplicate")
     print("242. Valid Anagram")
     print("1. Two sum")
+    print("49. Group Anagrams")
 
     entrada = input("Seleccione el número de problema: ")
     if entrada == "217":
@@ -11,6 +12,8 @@ def print_menu_arrays():
         is_anagram_menu()
     if entrada == "1":
         two_sum_menu()
+    if entrada == "49":
+        groupAnagrams_menu()
 
 #Todo lo relacionado con contains duplicate
 def contains_duplicate_menu():
@@ -148,3 +151,51 @@ def twoSum(nums, target):
             return [i, values[subs]]
         else:
             values[num] = i
+
+#Group anagrams
+
+def groupAnagrams_menu():
+    s = input("Ponga las palabras minusculas separadas por coma: ")
+    array = [i.strip() for i in s.split(",")]
+
+    print(groupAnagrams(array))
+def groupAnagrams(strs):
+    """
+        Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+        An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+        
+
+        Example 1:
+
+        Input: strs = ["eat","tea","tan","ate","nat","bat"]
+        Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+        Example 2:
+
+        Input: strs = [""]
+        Output: [[""]]
+        Example 3:
+
+        Input: strs = ["a"]
+        Output: [["a"]]
+        
+
+        Constraints:
+
+        1 <= strs.length <= 104
+        0 <= strs[i].length <= 100
+        strs[i] consists of lowercase English letters.
+    """
+    anagrams = {}
+    for stri in strs:
+        d = [0] * 26
+        for char in stri:
+            d[ord(char) - ord("a")] += 1
+            
+        elems = tuple(d)
+        if elems in anagrams:
+            anagrams[elems].append(stri)
+        else:
+            anagrams[elems] = [stri]
+    return list(anagrams.values())
