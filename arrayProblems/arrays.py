@@ -4,6 +4,8 @@ def print_menu_arrays():
     print("242. Valid Anagram")
     print("1. Two sum")
     print("49. Group Anagrams")
+    print("347. Top K Frequent")
+    print("238. Product except self")
 
     entrada = input("Seleccione el número de problema: ")
     if entrada == "217":
@@ -14,6 +16,10 @@ def print_menu_arrays():
         two_sum_menu()
     if entrada == "49":
         groupAnagrams_menu()
+    if entrada == "347":
+        tokK_menu()
+    if entrada == "238":
+        productExceptSelf_menu()
 
 #Todo lo relacionado con contains duplicate
 def contains_duplicate_menu():
@@ -199,3 +205,96 @@ def groupAnagrams(strs):
         else:
             anagrams[elems] = [stri]
     return list(anagrams.values())
+
+#Top K Elements
+def tokK_menu():
+    s = input("Inserte los numeros separados por coma: ")
+
+    array = [int(i.strip()) for i in s.split(",")]
+    t = int(input("El top K que desea: "))
+    print(topKFrequent(array, t))
+
+def topKFrequent(nums, k):
+    """
+        Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+        
+
+        Example 1:
+
+        Input: nums = [1,1,1,2,2,3], k = 2
+        Output: [1,2]
+        Example 2:
+
+        Input: nums = [1], k = 1
+        Output: [1]
+        
+
+        Constraints:
+
+        1 <= nums.length <= 105
+        -104 <= nums[i] <= 104
+        k is in the range [1, the number of unique elements in the array].
+        It is guaranteed that the answer is unique.
+        
+
+        Follow up: Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
+    """
+    counts = {}
+    for num in nums:
+        counts[num] = counts.get(num, 0) + 1
+    c = [[] for i in range(len(nums) + 1)]
+    for key, value in counts.items():
+        c[value].append(key)
+    ret = []
+    for i in reversed(c):
+        if i != []:
+            ret = ret + i
+        if len(ret) == k:
+            return ret
+        
+#Product except self
+def productExceptSelf_menu():
+    s = input("Inserte los numeros separados por coma: ")
+
+    array = [int(i.strip()) for i in s.split(",")]
+    print(productExceptSelf(array))
+
+def productExceptSelf(nums):
+    """
+    Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+
+    The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+    You must write an algorithm that runs in O(n) time and without using the division operation.
+
+    
+
+    Example 1:
+
+    Input: nums = [1,2,3,4]
+    Output: [24,12,8,6]
+    Example 2:
+
+    Input: nums = [-1,1,0,-3,3]
+    Output: [0,0,9,0,0]
+    
+
+    Constraints:
+
+    2 <= nums.length <= 105
+    -30 <= nums[i] <= 30
+    The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+    
+
+    Follow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)
+    """
+    ret = [1] * len(nums)
+    for i in range(1, len(nums)):
+        ret[i] = ret[i-1] * nums[i-1]
+    post = 1
+    for i in range(len(nums)-1, -1, -1):
+        ret[i] *= post
+        post *= nums[i]
+        print(post, i)
+    return ret
