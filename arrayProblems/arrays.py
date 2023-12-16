@@ -6,6 +6,7 @@ def print_menu_arrays():
     print("49. Group Anagrams")
     print("347. Top K Frequent")
     print("238. Product except self")
+    print("36. Is Valid Sudoku")
 
     entrada = input("Seleccione el número de problema: ")
     if entrada == "217":
@@ -20,6 +21,8 @@ def print_menu_arrays():
         tokK_menu()
     if entrada == "238":
         productExceptSelf_menu()
+    if entrada == "36":
+        isValidSudokuMenu()
 
 #Todo lo relacionado con contains duplicate
 def contains_duplicate_menu():
@@ -298,3 +301,48 @@ def productExceptSelf(nums):
         post *= nums[i]
         print(post, i)
     return ret
+
+#Valid sudoku
+
+def isValidSudokuMenu():
+    board = []
+    for i in range(9):
+        row_str = input(f"Ingrese la columna i separadas por comas, los valores vacios representarlos como puntos: ")
+        row = [i.strip() for i in row_str.split(",")]
+        if len(row)!=9:
+            print("Poner los 9 valores")
+            return
+        board.append(row)
+
+    print(isValidSudoku(board))
+
+def isValidSudoku(board):
+    """
+        Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+        Each row must contain the digits 1-9 without repetition.
+        Each column must contain the digits 1-9 without repetition.
+        Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+        Note:
+
+        A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+        Only the filled cells need to be validated according to the mentioned rules.
+    """
+    mapas_rows = [set() for i in range(9)]
+    mapas_cols = [set() for j in range(9)]
+    mapas_square = [[set() for j in range(3)] for i in range(3)]
+
+    for i in range(9):
+        for j in range(9):
+            number = board[i][j]
+            invalid_row = number in mapas_rows[i]
+            invalid_column = number in mapas_cols[j]
+            invalid_square = number in mapas_square[i//3][j//3]
+            if invalid_row or invalid_column or invalid_square:
+                return False
+            if number != ".":
+                mapas_rows[i].add(number)
+                mapas_cols[j].add(number)
+                mapas_square[i//3][j//3].add(number)
+    
+    return True
