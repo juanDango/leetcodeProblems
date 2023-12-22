@@ -7,6 +7,7 @@ def print_menu_arrays():
     print("347. Top K Frequent")
     print("238. Product except self")
     print("36. Is Valid Sudoku")
+    print("128. Longes Consecutive Sequence")
 
     entrada = input("Seleccione el número de problema: ")
     if entrada == "217":
@@ -23,6 +24,8 @@ def print_menu_arrays():
         productExceptSelf_menu()
     if entrada == "36":
         isValidSudokuMenu()
+    if entrada == "128":
+        longesConsecutive_menu()
 
 #Todo lo relacionado con contains duplicate
 def contains_duplicate_menu():
@@ -346,3 +349,48 @@ def isValidSudoku(board):
                 mapas_square[i//3][j//3].add(number)
     
     return True
+
+#Longes consecutive sequence
+
+def longesConsecutive_menu():
+    s = input("Inserte los numeros separados por coma: ")
+
+    array = [int(i.strip()) for i in s.split(",")]
+    print(longestConsecutive(array))
+
+def longestConsecutive(nums):
+    """
+        Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+
+        You must write an algorithm that runs in O(n) time.
+
+        
+
+        Example 1:
+
+        Input: nums = [100,4,200,1,3,2]
+        Output: 4
+        Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+        Example 2:
+
+        Input: nums = [0,3,7,2,5,8,4,6,0,1]
+        Output: 9
+        
+
+        Constraints:
+
+        0 <= nums.length <= 105
+        -109 <= nums[i] <= 109
+    """
+    nums_set = set(nums)
+    max_l = 0
+    for num in nums:
+        curr_num = num
+        length = 0
+        if curr_num - 1 not in nums_set:
+            while curr_num in nums_set:
+                curr_num += 1
+                length += 1
+            max_l = max(length, max_l)
+    
+    return max_l
