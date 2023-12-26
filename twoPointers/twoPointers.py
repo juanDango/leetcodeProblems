@@ -2,12 +2,15 @@ def print_menu_two_pointers():
     print("Ejercicios de two pointers seleccione uno: ")
     print("125. Valid Palindrome")
     print("167. Two Sum II - Input Array Is Sorted")
+    print("15. 3Sum")
 
     entrada = input("Seleccione el número de problema: ")
     if entrada == "125":
         isPalindrome_menu()
     if entrada == "167":
         twoSum_menu()
+    if entrada == "15":
+        threeSum_menu()
 
 def isPalindrome_menu():
     string = input("Ingrese el string a verificar: ")
@@ -108,3 +111,57 @@ def twoSum(numbers, target):
             L += 1
         else:
             return [L + 1, R + 1]
+        
+
+def threeSum_menu():
+    s = input("Inserte los numeros separados por coma: ")
+
+    array = [int(i.strip()) for i in s.split(",")]
+    print(threeSum(array))
+
+def threeSum(nums):
+    """
+        Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+        Notice that the solution set must not contain duplicate triplets.
+
+        
+
+        Example 1:
+
+        Input: nums = [-1,0,1,2,-1,-4]
+        Output: [[-1,-1,2],[-1,0,1]]
+        Explanation: 
+        nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+        nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+        nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+        The distinct triplets are [-1,0,1] and [-1,-1,2].
+        Notice that the order of the output and the order of the triplets does not matter.
+        Example 2:
+
+        Input: nums = [0,1,1]
+        Output: []
+        Explanation: The only possible triplet does not sum up to 0.
+        Example 3:
+
+        Input: nums = [0,0,0]
+        Output: [[0,0,0]]
+        Explanation: The only possible triplet sums up to 0.
+        
+
+        Constraints:
+
+        3 <= nums.length <= 3000
+        -105 <= nums[i] <= 105
+    """
+    ret = set()
+
+    d = {n: i for i, n in enumerate(nums)}
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            z = -(nums[i]+nums[j])
+            if z in d and d[z] != i and d[z] != j:
+                pair = tuple(sorted([nums[i], nums[j], z]))
+                ret.add(pair)
+
+    return ret
