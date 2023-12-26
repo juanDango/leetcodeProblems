@@ -3,6 +3,7 @@ def print_menu_two_pointers():
     print("125. Valid Palindrome")
     print("167. Two Sum II - Input Array Is Sorted")
     print("15. 3Sum")
+    print("11. Container With Most Water")
 
     entrada = input("Seleccione el número de problema: ")
     if entrada == "125":
@@ -11,6 +12,8 @@ def print_menu_two_pointers():
         twoSum_menu()
     if entrada == "15":
         threeSum_menu()
+    if entrada == "11":
+        maxArea_menu()
 
 def isPalindrome_menu():
     string = input("Ingrese el string a verificar: ")
@@ -165,3 +168,51 @@ def threeSum(nums):
                 ret.add(pair)
 
     return ret
+
+def maxArea_menu():
+    s = input("Inserte los numeros separados por coma: ")
+
+    array = [int(i.strip()) for i in s.split(",")]
+    print(maxArea(array))
+
+def maxArea(height):
+    """
+        You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+        Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+        Return the maximum amount of water a container can store.
+
+        Notice that you may not slant the container.
+        
+        Example 1:
+
+        Input: height = [1,8,6,2,5,4,8,3,7]
+        Output: 49
+        Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+        Example 2:
+
+        Input: height = [1,1]
+        Output: 1
+        
+
+        Constraints:
+
+        n == height.length
+        2 <= n <= 105
+        0 <= height[i] <= 104
+    """
+    L, R = 0, len(height) - 1
+
+    max_vol = 0
+    while L < R:
+        h = min(height[L], height[R])
+        w = R - L
+        vol = h*w
+        max_vol = vol if vol>max_vol else max_vol
+
+        if height[L] > height[R]:
+            R -= 1
+        else:
+            L += 1
+    return max_vol
